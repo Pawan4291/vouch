@@ -44,12 +44,12 @@ export function ConnectButton({ wallet }: Props) {
     return (
       <div className="flex items-center gap-2">
         <motion.a
-          href={`https://faucet.polygon.technology/`}
+          href={`https://www.alchemy.com/faucets/polygon-amoy`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-900/40 border border-amber-500/30 text-amber-300 hover:bg-amber-800/40 transition-all"
           whileHover={{ scale: 1.02 }}
-          title="Get free test POL for Polygon Amoy"
+          title="Get free test POL for Polygon Amoy — paste your address, no login needed"
         >
           <span className="text-sm font-medium">Get Faucet</span>
           <ExternalLink size={11} className="text-amber-500/60" />
