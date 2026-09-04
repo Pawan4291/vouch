@@ -42,17 +42,30 @@ export function ConnectButton({ wallet }: Props) {
 
   if (isEvmConnected && evmAddress) {
     return (
-      <motion.a
-        href={`https://amoy.polygonscan.com/address/${evmAddress}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-900/40 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-800/40 transition-all"
-        whileHover={{ scale: 1.02 }}
-      >
-        <CheckCircle size={14} className="text-emerald-400" />
-        <span className="text-sm font-mono font-medium">{shortAddr(evmAddress)}</span>
-        <ExternalLink size={11} className="text-emerald-500/60" />
-      </motion.a>
+      <div className="flex items-center gap-2">
+        <motion.a
+          href={`https://faucet.polygon.technology/`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-900/40 border border-amber-500/30 text-amber-300 hover:bg-amber-800/40 transition-all"
+          whileHover={{ scale: 1.02 }}
+          title="Get free test POL for Polygon Amoy"
+        >
+          <span className="text-sm font-medium">Get Faucet</span>
+          <ExternalLink size={11} className="text-amber-500/60" />
+        </motion.a>
+        <motion.a
+          href={`https://amoy.polygonscan.com/address/${evmAddress}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-900/40 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-800/40 transition-all"
+          whileHover={{ scale: 1.02 }}
+        >
+          <CheckCircle size={14} className="text-emerald-400" />
+          <span className="text-sm font-mono font-medium">{shortAddr(evmAddress)}</span>
+          <ExternalLink size={11} className="text-emerald-500/60" />
+        </motion.a>
+      </div>
     );
   }
 
