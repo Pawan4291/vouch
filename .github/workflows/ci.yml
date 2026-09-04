@@ -1,0 +1,90 @@
+name: Vouch CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─── Frontend build ────────────────────────────────────────────────────────
+  frontend:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vouch-dist
+          path: dist/
+
+  # ─── Smart contracts ────────────────────────────────────────────────────────
+  contracts:
+    name: Smart Contract Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Install contract dependencies
+        working-directory: contracts
+        run: forge install
+
+      - name: Build contracts
+        working-directory: contracts
+        run: forge build --sizes
+
+      - name: Run tests
+        working-directory: contracts
+        run: forge test -vvv
+
+      - name: Run coverage
+        working-directory: contracts
+        run: forge coverage --report summary
+
+  # ─── Security audit ─────────────────────────────────────────────────────────
+  audit:
+    name: Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for hardcoded secrets
+        run: |
+          # Fail if any private key patterns found
+          if grep -r "0x[0-9a-fA-F]\{64\}" --include="*.ts" --include="*.tsx" --include="*.js" src/ 2>/dev/null; then
+            echo "ERROR: Possible private key found in source code"
+            exit 1
+          fi
+          echo "No hardcoded secrets detected"
+
+      - name: Verify no mock data in hooks
+        run: |
+          if grep -r "mockListings\|fakeListing\|sampleData" src/ 2>/dev/null; then
+            echo "ERROR: Mock/fake data found in source"
+            exit 1
+          fi
+          echo "No mock data detected"

@@ -1,0 +1,10 @@
+node_modules
+dist
+.env
+.env.local
+contracts/.env
+contracts/out
+contracts/cache
+contracts/broadcast
+.vercel
+*.log

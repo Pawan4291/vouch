@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+/* ─── Fonts ──────────────────────────────────────────────────────────────── */
+:root {
+  --font-sans: 'Inter', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Deep Indigo palette */
+  --color-indigo-950: #0d0920;
+  --color-indigo-900: #100d30;
+  --color-indigo-800: #1a1250;
+  --color-indigo-700: #2d1f7a;
+  --color-indigo-600: #3730a3;
+  --color-indigo-400: #818cf8;
+  --color-indigo-300: #a5b4fc;
+
+  /* Warm Gold palette */
+  --color-gold-300: #fde68a;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f5c842;
+  --color-gold-600: #e8a020;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  background: var(--color-indigo-950);
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 80, 180, 0.3);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 200, 66, 0.4);
+}
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Selection highlight */
+::selection {
+  background: rgba(245, 200, 66, 0.3);
+  color: white;
+}
+
+/* Number tabular figures */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Safe area inset for mobile */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Gradient text */
+.gradient-gold {
+  background: linear-gradient(135deg, #f5c842, #e8a020);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Code blocks */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+/* Frosted glass effect */
+.glass {
+  background: rgba(13, 9, 32, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Gold border glow */
+.glow-gold {
+  box-shadow: 0 0 20px rgba(245, 200, 66, 0.2), 0 0 60px rgba(245, 200, 66, 0.05);
+}
+
+/* Animated gradient border */
+@keyframes border-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animated-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg, transparent 70%, rgba(245, 200, 66, 0.6) 100%);
+  animation: border-rotate 4s linear infinite;
+  z-index: -1;
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.04) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid rgba(245, 200, 66, 0.5);
+  outline-offset: 2px;
+}
+
+/* Input auto-fill override */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px rgba(13, 9, 32, 0.9) inset;
+  -webkit-text-fill-color: white;
+  caret-color: white;
+}
+
+/* Textarea resize handle */
+textarea {
+  resize: vertical;
+}
+
+/* Select arrow override */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236366f1' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+}
+
+/* Prevent overscroll flash */
+body {
+  overscroll-behavior: none;
+}
